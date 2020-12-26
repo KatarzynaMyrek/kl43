@@ -5,11 +5,10 @@ views:
     icon: mdi:cloud
     cards:
       - type: entities
-        title: Sensors
+        title: HASS
         entities:
           - sensor.current_version
           - sensor.hacs
-          - binary_sensor.door
           - sensor.connected_clients
           - alert.kl43_door
       - type: entities
@@ -22,11 +21,11 @@ views:
         title: PI Sensors
         entities:
           - sensor.glances_cpu_thermal_1_temp
+          - sensor.glances_cpu_load
+          - sensor.glances_ram_used_percent
+          - sensor.glances_used_percent
           - sensor.glances_var_lib_docker_used_percent
           - sensor.glances_mnt_hass_used_percent
-          - sensor.glances_used_percent
-          - sensor.glances_ram_used_percent
-          - sensor.glances_cpu_load
       - type: entities
         title: Lights
         entities:

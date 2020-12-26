@@ -8,3 +8,4 @@ deps/*
 home-assistant_v2.db
 home-assistant.log
 dehydrated.log
+dehydrated
