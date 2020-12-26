@@ -1,0 +1,19 @@
+lights:
+  name: Lights
+  entities:
+    - light.yeelight_ct_bulb_0x0000000007e8ebd6
+    - light.yeelight_stripe_0x0000000005000bcd
+
+
+pirs:
+  name: PIRs
+  entities:
+    - binary_sensor.pir_door
+    - binary_sensor.pir_entresol
+
+lightenabler:
+  name: LightEnablers
+  entities:
+    - binary_sensor.pir_door
+    - binary_sensor.pir_entresol
+    - binary_sensor.door

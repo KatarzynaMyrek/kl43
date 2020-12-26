@@ -1,0 +1,60 @@
+title: KL43  hass
+
+views:
+  - title: Climate
+    icon: mdi:cloud
+    cards:
+      - type: entities
+        title: Sensors
+        entities:
+          - sensor.current_version
+          - sensor.hacs
+          - binary_sensor.door
+          - sensor.connected_clients
+          - alert.kl43_door
+      - type: entities
+        title: Binary sensors
+        entities:
+          - binary_sensor.door
+          - binary_sensor.pir_door
+          - binary_sensor.pir_entresol
+      - type: entities
+        title: PI Sensors
+        entities:
+          - sensor.glances_cpu_thermal_1_temp
+          - sensor.glances_var_lib_docker_used_percent
+          - sensor.glances_mnt_hass_used_percent
+          - sensor.glances_used_percent
+          - sensor.glances_ram_used_percent
+          - sensor.glances_cpu_load
+      - type: entities
+        title: Lights
+        entities:
+          - light.yeelight_ct_bulb_0x0000000007e8ebd6
+          - light.yeelight_stripe_0x0000000005000bcd
+      - type: history-graph
+        title: Humidity
+        hours_to_show: 24
+        refresh_interval: 5
+        entities:
+          - sensor.ble_humidity_xiaomi_sensor_countertop1
+          - sensor.ble_humidity_xiaomi_sensor_countertop2
+          - sensor.ble_humidity_xiaomi_sensor_door
+          - sensor.ble_humidity_xiaomi_sensor_storagerack1_bottom
+          - sensor.ble_humidity_xiaomi_sensor_storagerack1_mid
+          - sensor.ble_humidity_xiaomi_sensor_storagerack1_top
+          - sensor.ble_humidity_xiaomi_sensor_storagerack2_bottom
+          - sensor.ble_humidity_xiaomi_sensor_storagerack2_top
+      - type: history-graph
+        title: Temperature
+        hours_to_show: 24
+        refresh_interval: 5
+        entities:
+          - sensor.ble_temperature_xiaomi_sensor_countertop1
+          - sensor.ble_temperature_xiaomi_sensor_countertop2
+          - sensor.ble_temperature_xiaomi_sensor_door
+          - sensor.ble_temperature_xiaomi_sensor_storagerack1_bottom
+          - sensor.ble_temperature_xiaomi_sensor_storagerack1_mid
+          - sensor.ble_temperature_xiaomi_sensor_storagerack1_top
+          - sensor.ble_temperature_xiaomi_sensor_storagerack2_bottom
+          - sensor.ble_temperature_xiaomi_sensor_storagerack2_top

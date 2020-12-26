@@ -1,0 +1,148 @@
+homeassistant:
+
+config:
+
+automation: !include automations.yaml
+group: !include groups.yaml
+
+http:
+  ssl_certificate: !secret sslpem
+  ssl_key: !secret sslkey
+
+websocket_api:
+
+duckdns:
+  domain: !secret duckdns_domain
+  access_token: !secret duckdns_token
+
+ble_monitor:
+  discovery: False
+  devices:
+    - mac: 'A4:C1:38:D4:AB:CB'
+      encryption_key: !secret xiaomi_sensor_door_ek
+      temperature_unit: C
+      name: 'Xiaomi_Sensor_Door'
+    - mac: 'A4:C1:38:F3:0E:16'
+      encryption_key: !secret xiaomi_sensor_countertop1_ek
+      temperature_unit: C
+      name: 'Xiaomi_Sensor_Countertop1'
+    - mac: 'A4:C1:38:BA:D6:90'
+      encryption_key: !secret xiaomi_sensor_countertop2_ek
+      temperature_unit: C                  
+      name: 'Xiaomi_Sensor_Countertop2'
+    - mac: 'A4:C1:38:81:2F:E0'
+      encryption_key: !secret xiaomi_sensor_storageRack2_top_ek
+      temperature_unit: C
+      name: 'Xiaomi_Sensor_StorageRack2_Top'
+    - mac: 'A4:C1:38:A4:F5:48'
+      encryption_key: !secret xiaomi_sensor_storageRack2_bottom_ek
+      temperature_unit: C
+      name: 'Xiaomi_Sensor_StorageRack2_Bottom'
+    - mac: 'A4:C1:38:06:50:32'
+      encryption_key: !secret xiaomi_sensor_storageRack1_bottom_ek
+      temperature_unit: C      
+      name: 'Xiaomi_Sensor_StorageRack1_Bottom'
+    - mac: 'A4:C1:38:F3:27:EB'
+      encryption_key: !secret xiaomi_sensor_storageRack1_mid_ek
+      temperature_unit: C   
+      name: 'Xiaomi_Sensor_StorageRack1_Mid'
+    - mac: 'A4:C1:38:46:20:CF'
+      encryption_key: !secret xiaomi_sensor_storageRack1_top_ek
+      temperature_unit: C
+      name: 'Xiaomi_Sensor_StorageRack1_Top' 
+
+sensor:
+  - platform: websocket_api
+  - platform: version
+
+binary_sensor:
+  - platform: rpi_gpio
+    ports:
+      18: Door
+    pull_mode: UP
+  - platform: rpi_gpio
+    ports:
+      23: PIR_Entresol
+    pull_mode: UP
+  - platform: rpi_gpio
+    ports:
+      24: PIR_Door
+    pull_mode: UP
+
+lovelace:
+  mode: yaml
+
+recorder:
+  purge_keep_days: 365
+  include:
+    entities:
+      - sensor.ble_humidity_xiaomi_sensor_countertop1
+      - sensor.ble_humidity_xiaomi_sensor_countertop2
+      - sensor.ble_humidity_xiaomi_sensor_door
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_bottom
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_mid
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_top
+      - sensor.ble_humidity_xiaomi_sensor_storagerack2_bottom
+      - sensor.ble_humidity_xiaomi_sensor_storagerack2_top
+      - sensor.ble_temperature_xiaomi_sensor_countertop1
+      - sensor.ble_temperature_xiaomi_sensor_countertop2
+      - sensor.ble_temperature_xiaomi_sensor_door
+      - sensor.ble_temperature_xiaomi_sensor_storagerack1_bottom
+      - sensor.ble_temperature_xiaomi_sensor_storagerack1_mid
+      - sensor.ble_temperature_xiaomi_sensor_storagerack1_top
+      - sensor.ble_temperature_xiaomi_sensor_storagerack2_bottom
+      - sensor.ble_temperature_xiaomi_sensor_storagerack2_top
+
+history:
+  include:
+    entities:
+      - binary_sensor.door
+      - binary_sensor.pir_door
+      - binary_sensor.pir_entresol
+      - sensor.ble_humidity_xiaomi_sensor_countertop1
+      - sensor.ble_humidity_xiaomi_sensor_countertop2
+      - sensor.ble_humidity_xiaomi_sensor_door
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_bottom
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_mid
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_top
+      - sensor.ble_humidity_xiaomi_sensor_storagerack2_bottom
+      - sensor.ble_humidity_xiaomi_sensor_storagerack2_top
+      - sensor.ble_temperature_xiaomi_sensor_countertop1
+      - sensor.ble_temperature_xiaomi_sensor_countertop2
+      - sensor.ble_temperature_xiaomi_sensor_door
+      - sensor.ble_temperature_xiaomi_sensor_storagerack1_bottom
+      - sensor.ble_temperature_xiaomi_sensor_storagerack1_mid
+      - sensor.ble_temperature_xiaomi_sensor_storagerack1_top
+      - sensor.ble_temperature_xiaomi_sensor_storagerack2_bottom
+      - sensor.ble_temperature_xiaomi_sensor_storagerack2_top
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_token
+    allowed_chat_ids:
+      - !secret olivia_chat_id
+      - !secret heziwm_chat_id
+
+notify:
+  - name: Olivia
+    platform: telegram
+    chat_id: !secret
+  - name: Heziwm
+    platform: telegram
+    chat_id: !secret heziwm_chat_id
+
+alert:
+  kl43_door:
+    name: KL43 door is open
+    done_message: KL43 door is closed
+    entity_id: binary_sensor.door
+    state: 'on'
+    repeat: 5
+    can_acknowledge: true
+    skip_first: false
+    data:
+      inline_keyboard:
+        - 'Acknowledge:/kl43_door_acknowledge'
+    notifiers:
+      - olivia
+      - heziwm

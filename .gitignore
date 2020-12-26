@@ -1,0 +1,10 @@
+secrets.yaml
+.HA_VERSION
+.storage/*
+virtualenv
+custom_components/*
+dehydrated/*
+deps/*
+home-assistant_v2.db
+home-assistant.log
+dehydrated.log
