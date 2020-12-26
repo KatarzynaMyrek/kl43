@@ -99,6 +99,12 @@ history:
       - binary_sensor.door
       - binary_sensor.pir_door
       - binary_sensor.pir_entresol
+      - sensor.glances_cpu_thermal_1_temp
+      - sensor.glances_cpu_load
+      - sensor.glances_ram_used_percent
+      - sensor.glances_used_percent
+      - sensor.glances_var_lib_docker_used_percent
+      - sensor.glances_mnt_hass_used_percent
       - sensor.ble_humidity_xiaomi_sensor_countertop1
       - sensor.ble_humidity_xiaomi_sensor_countertop2
       - sensor.ble_humidity_xiaomi_sensor_door
@@ -126,7 +132,7 @@ telegram_bot:
 notify:
   - name: Olivia
     platform: telegram
-    chat_id: !secret
+    chat_id: !secret olivia_chat_id
   - name: Heziwm
     platform: telegram
     chat_id: !secret heziwm_chat_id
