@@ -60,14 +60,6 @@ binary_sensor:
     ports:
       18: Door
     pull_mode: UP
-  - platform: rpi_gpio
-    ports:
-      23: PIR_Entresol
-    pull_mode: UP
-  - platform: rpi_gpio
-    ports:
-      24: PIR_Door
-    pull_mode: UP
 
 lovelace:
   mode: yaml
@@ -97,8 +89,6 @@ history:
   include:
     entities:
       - binary_sensor.door
-      - binary_sensor.pir_door
-      - binary_sensor.pir_entresol
       - sensor.glances_cpu_thermal_1_temp
       - sensor.glances_cpu_load
       - sensor.glances_ram_used_percent

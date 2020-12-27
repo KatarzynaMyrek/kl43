@@ -30,30 +30,11 @@
           {%- for item in states if item.state is defined and item.state == 'unavailable' -%}
             "{{ item.name | replace('_', ' ') }} is unavailable"
           {%- endfor -%}
+    - service: notify.heziwm
+      data_template:
+        message: >
+          {%- for item in states if item.state is defined and item.state == 'unavailable' -%}
+            "{{ item.name | replace('_', ' ') }} is unavailable"
+          {%- endfor -%}
 
-
-## Movement
-- alias: Washroom Led Light On
-  initial_state: 'true'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.door
-      to: 'on'
-  action:
-    service: light.turn_on
-    entity_id: group.lights
-    data:
-      transition: 160
-
-- alias: Washroom Led Light Off
-  initial_state: 'true'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.door
-      to: 'off'
-      for:
-        minutes: 1
-  action:
-    service: light.turn_off
-    entity_id: group.lights
 

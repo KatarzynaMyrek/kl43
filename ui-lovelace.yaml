@@ -15,8 +15,12 @@ views:
         title: Binary sensors
         entities:
           - binary_sensor.door
-          - binary_sensor.pir_door
-          - binary_sensor.pir_entresol
+      - type: history-graph
+        title: PIR history
+        hours_to_show: 24
+        refresh_interval: 5
+        entities:
+          - binary_sensor.door
       - type: entities
         title: PI Sensors
         entities:
@@ -27,10 +31,9 @@ views:
           - sensor.glances_var_lib_docker_used_percent
           - sensor.glances_mnt_hass_used_percent
       - type: entities
-        title: Lights
+        title: Automations
         entities:
-          - light.yeelight_ct_bulb_0x0000000007e8ebd6
-          - light.yeelight_stripe_0x0000000005000bcd
+          - automation.daily_report_with_unavailable_entities
       - type: history-graph
         title: Humidity
         hours_to_show: 24
