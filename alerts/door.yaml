@@ -1,0 +1,14 @@
+  kl43_door:
+    name: KL43 door is open
+    done_message: KL43 door is closed
+    entity_id: binary_sensor.door
+    state: 'on'
+    repeat: 5
+    can_acknowledge: true
+    skip_first: false
+    data:
+      inline_keyboard:
+        - 'Acknowledge:/kl43_door_acknowledge'
+    notifiers:
+      - olivia
+      - heziwm

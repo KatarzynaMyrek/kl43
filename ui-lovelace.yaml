@@ -9,6 +9,7 @@ views:
         entities:
           - sensor.current_version
           - sensor.hacs
+          - alert.pi_health
           - sensor.connected_clients
           - alert.kl43_door
       - type: entities

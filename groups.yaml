@@ -1,1 +1,9 @@
 ---
+pi_health_sensors:
+  entities:
+    - binary_sensor.pi_cpu_load_high
+    - binary_sensor.pi_cpu_too_hot
+    - binary_sensor.pi_memory_low
+    - binary_sensor.pi_root_low_space
+    - binary_sensor.pi_docker_low_space
+    - binary_sensor.pi_hass_low_space

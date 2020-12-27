@@ -1,0 +1,11 @@
+  pi_health:
+    name: KL43 PI is having health issues
+    done_message: KL43 PI is health is back to normal
+    entity_id: group.pi_health_sensors
+    state: 'on'
+    repeat: 60
+    can_acknowledge: false
+    skip_first: true
+    notifiers:
+      - olivia
+      - heziwm

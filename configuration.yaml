@@ -4,6 +4,7 @@ config:
 
 automation: !include automations.yaml
 group: !include groups.yaml
+alert: !include_dir_merge_named alerts
 
 http:
   ssl_certificate: !secret sslpem
@@ -60,6 +61,32 @@ binary_sensor:
     ports:
       18: Door
     pull_mode: UP
+  - platform: template
+    sensors:
+      pi_cpu_too_hot:
+        value_template: "{{ states('sensor.glances_cpu_thermal_1_temp') | int > 40 }}"
+        friendly_name: 'PI CPU too hot'
+  - platform: template
+    sensors:
+      pi_cpu_load_high:
+        value_template: "{{ states('sensor.glances_cpu_load') | int > 1 }}"
+        friendly_name: 'PI CPU load too high'
+  - platform: template
+    sensors:
+      pi_memory_low:
+        value_template: "{{ states('sensor.glances_ram_used_percent') | int > 90 }}"
+        friendly_name: 'PI memory low'
+  - platform: template
+    sensors:
+      pi_root_low_space:
+        value_template: "{{ states('sensor.glances_used_percent') | int > 90 }}"
+        friendly_name: 'PI root low space'
+      pi_docker_low_space:
+        value_template: "{{ states('sensor.glances_var_lib_docker_used_percent') | int > 90 }}"
+        friendly_name: 'PI docker low space'
+      pi_hass_low_space:
+        value_template: "{{ states('sensor.glances_mnt_hass_used_percent') | int > 90 }}"
+        friendly_name: 'PI hass low space'
 
 lovelace:
   mode: yaml
@@ -127,18 +154,3 @@ notify:
     platform: telegram
     chat_id: !secret heziwm_chat_id
 
-alert:
-  kl43_door:
-    name: KL43 door is open
-    done_message: KL43 door is closed
-    entity_id: binary_sensor.door
-    state: 'on'
-    repeat: 5
-    can_acknowledge: true
-    skip_first: false
-    data:
-      inline_keyboard:
-        - 'Acknowledge:/kl43_door_acknowledge'
-    notifiers:
-      - olivia
-      - heziwm
