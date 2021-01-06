@@ -5,5 +5,8 @@ pi_health_sensors:
     - binary_sensor.pi_cpu_too_hot
     - binary_sensor.pi_memory_low
     - binary_sensor.pi_root_low_space
-    - binary_sensor.pi_docker_low_space
-    - binary_sensor.pi_hass_low_space
+
+lights:
+  entities:
+    - light.yeelight_ct_bulb_0x0000000007e8ebd6
+    - light.yeelight_stripe_0x0000000005000bcd

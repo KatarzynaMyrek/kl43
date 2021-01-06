@@ -55,6 +55,13 @@ ble_monitor:
 sensor:
   - platform: websocket_api
   - platform: version
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: memory_use_percent
+      - type: load_15m
+      - type: processor_temperature
 
 binary_sensor:
   - platform: rpi_gpio
@@ -64,29 +71,23 @@ binary_sensor:
   - platform: template
     sensors:
       pi_cpu_too_hot:
-        value_template: "{{ states('sensor.glances_cpu_thermal_1_temp') | int > 40 }}"
+        value_template: "{{ states('sensor.processor_temperature') | int > 40 }}"
         friendly_name: 'PI CPU too hot'
   - platform: template
     sensors:
       pi_cpu_load_high:
-        value_template: "{{ states('sensor.glances_cpu_load') | int > 1 }}"
+        value_template: "{{ states('sensor.load_15m') | int > 1 }}"
         friendly_name: 'PI CPU load too high'
   - platform: template
     sensors:
       pi_memory_low:
-        value_template: "{{ states('sensor.glances_ram_used_percent') | int > 90 }}"
+        value_template: "{{ states('sensor.memory_use_percent') | int > 90 }}"
         friendly_name: 'PI memory low'
   - platform: template
     sensors:
       pi_root_low_space:
-        value_template: "{{ states('sensor.glances_used_percent') | int > 90 }}"
+        value_template: "{{ states('sensor.disk_use_percent') | int > 90 }}"
         friendly_name: 'PI root low space'
-      pi_docker_low_space:
-        value_template: "{{ states('sensor.glances_var_lib_docker_used_percent') | int > 90 }}"
-        friendly_name: 'PI docker low space'
-      pi_hass_low_space:
-        value_template: "{{ states('sensor.glances_mnt_hass_used_percent') | int > 90 }}"
-        friendly_name: 'PI hass low space'
 
 lovelace:
   mode: yaml
@@ -116,12 +117,10 @@ history:
   include:
     entities:
       - binary_sensor.door
-      - sensor.glances_cpu_thermal_1_temp
-      - sensor.glances_cpu_load
-      - sensor.glances_ram_used_percent
-      - sensor.glances_used_percent
-      - sensor.glances_var_lib_docker_used_percent
-      - sensor.glances_mnt_hass_used_percent
+      - sensor.processor_temperature
+      - sensor.load_15m
+      - sensor.memory_use_percent
+      - sensor.disk_use_percent
       - sensor.ble_humidity_xiaomi_sensor_countertop1
       - sensor.ble_humidity_xiaomi_sensor_countertop2
       - sensor.ble_humidity_xiaomi_sensor_door

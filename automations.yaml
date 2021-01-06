@@ -37,4 +37,23 @@
             "{{ item.name | replace('_', ' ') }} is unavailable"
           {%- endfor -%}
 
+## Light
+- alias: Lights On
+  initial_state: 'true'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door
+      to: 'on'
+  action:
+    service: light.turn_on
+    entity_id: group.lights
 
+- alias: Lights Off
+  initial_state: 'true'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door
+      to: 'off'
+  action:
+    service: light.turn_off
+    entity_id: group.lights
