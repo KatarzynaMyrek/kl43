@@ -1,7 +1,7 @@
   kl43_door:
     name: KL43 door is open
     done_message: KL43 door is closed
-    entity_id: binary_sensor.door
+    entity_id: binary_sensor.ble_opening_xiaomi_sensor_door_status
     state: 'on'
     repeat: 5
     can_acknowledge: true
