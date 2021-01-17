@@ -18,6 +18,7 @@ duckdns:
 
 ble_monitor:
   discovery: False
+  restore_state: True
   devices:
     - mac: 'A4:C1:38:D4:AB:CB'
       encryption_key: !secret xiaomi_sensor_door_ek
@@ -51,6 +52,9 @@ ble_monitor:
       encryption_key: !secret xiaomi_sensor_storageRack1_top_ek
       temperature_unit: C
       name: 'Xiaomi_Sensor_StorageRack1_Top' 
+    - mac: 'E4:AA:EC:34:E1:66'
+      encryption_key: !secret xiaomi_sensor_door_status_ek
+      name: 'Xiaomi_Sensor_Door_Status' 
 
 sensor:
   - platform: websocket_api

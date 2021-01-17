@@ -42,7 +42,7 @@
   initial_state: 'true'
   trigger:
     - platform: state
-      entity_id: binary_sensor.door
+      entity_id: binary_sensor.ble_opening_xiaomi_sensor_door_status
       to: 'on'
   action:
     service: light.turn_on
@@ -52,7 +52,7 @@
   initial_state: 'true'
   trigger:
     - platform: state
-      entity_id: binary_sensor.door
+      entity_id: binary_sensor.ble_opening_xiaomi_sensor_door_status
       to: 'off'
   action:
     service: light.turn_off
