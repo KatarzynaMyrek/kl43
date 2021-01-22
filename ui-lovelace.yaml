@@ -13,9 +13,8 @@ views:
       - type: entities
         title: Binary sensors
         entities:
-          - binary_sensor.door
-          - alert.kl43_door
           - binary_sensor.ble_opening_xiaomi_sensor_door_status
+          - alert.kl43_door
       - type: entities
         title: PI Sensors
         entities:
@@ -28,6 +27,7 @@ views:
         title: Automations
         entities:
           - automation.daily_report_with_unavailable_entities
+          - automation.daily_report_with_unknown_state_entities
       - type: entities
         title: Lights
         entities:

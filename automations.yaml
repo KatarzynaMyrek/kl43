@@ -37,6 +37,32 @@
             "{{ item.name | replace('_', ' ') }} is unavailable"
           {%- endfor -%}
 
+- alias: Daily report with unknown state entities
+  initial_state: 'true'
+  trigger:
+    platform: time
+    at: '20:10:00'
+  condition:
+    condition: template
+    value_template: >
+              {% set unavails = states.sensor | selectattr('state', 'eq', 'unknown')
+                               | map(attribute='name')
+                               | list
+                               | length  %}
+               {{ unavails > 0 }}
+  action:
+    - service: notify.olivia
+      data_template:
+        message: >
+          {%- for item in states if item.state is defined and item.state == 'unknown' -%}
+            "{{ item.name | replace('_', ' ') }} is in unknown state"
+          {%- endfor -%}
+    - service: notify.heziwm
+      data_template:
+        message: >
+          {%- for item in states if item.state is defined and item.state == 'unknown' -%}
+            "{{ item.name | replace('_', ' ') }} is in unknown state"
+          {%- endfor -%}
 ## Light
 - alias: Lights On
   initial_state: 'true'

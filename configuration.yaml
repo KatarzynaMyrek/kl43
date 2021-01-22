@@ -18,7 +18,6 @@ duckdns:
 
 ble_monitor:
   discovery: False
-  restore_state: True
   devices:
     - mac: 'A4:C1:38:D4:AB:CB'
       encryption_key: !secret xiaomi_sensor_door_ek
@@ -68,10 +67,6 @@ sensor:
       - type: processor_temperature
 
 binary_sensor:
-  - platform: rpi_gpio
-    ports:
-      18: Door
-    pull_mode: UP
   - platform: template
     sensors:
       pi_cpu_too_hot:
@@ -150,10 +145,10 @@ telegram_bot:
       - !secret heziwm_chat_id
 
 notify:
-  - name: Olivia
+  - name: olivia
     platform: telegram
     chat_id: !secret olivia_chat_id
-  - name: Heziwm
+  - name: heziwm
     platform: telegram
     chat_id: !secret heziwm_chat_id
 
