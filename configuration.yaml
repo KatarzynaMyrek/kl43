@@ -54,6 +54,15 @@ ble_monitor:
     - mac: 'E4:AA:EC:34:E1:66'
       encryption_key: !secret xiaomi_sensor_door_status_ek
       name: 'Xiaomi_Sensor_Door_Status' 
+    - mac: '58:2D:34:60:34:B2'
+      encryption_key: !secret qingping_motion_1_ek
+      name: 'QingPingMotionSensor1'
+    - mac: '58:2D:34:60:34:97'
+      encryption_key: !secret qingping_motion_2_ek
+      name: 'QingPingMotionSensor2'
+    - mac: '58:2D:34:60:34:FC'
+      encryption_key: !secret qingping_motion_3_ek
+      name: 'QingPingMotionSensor3'
 
 sensor:
   - platform: websocket_api
@@ -65,6 +74,19 @@ sensor:
       - type: memory_use_percent
       - type: load_15m
       - type: processor_temperature
+  - platform: average
+    name: "Average humidity"
+    duration:
+      minutes: 60
+    entities:
+      - sensor.ble_humidity_xiaomi_sensor_countertop1
+      - sensor.ble_humidity_xiaomi_sensor_countertop2
+      - sensor.ble_humidity_xiaomi_sensor_door
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_bottom
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_mid
+      - sensor.ble_humidity_xiaomi_sensor_storagerack1_top
+      - sensor.ble_humidity_xiaomi_sensor_storagerack2_bottom
+      - sensor.ble_humidity_xiaomi_sensor_storagerack2_top
 
 binary_sensor:
   - platform: template
@@ -87,9 +109,12 @@ binary_sensor:
       pi_root_low_space:
         value_template: "{{ states('sensor.disk_use_percent') | int > 90 }}"
         friendly_name: 'PI root low space'
+  - platform: template
+    sensors:
+      average_humidity_too_high:
+        value_template: "{{ states('sensor.average_humidity') | int > 70 }}"
+        friendly_name: 'Average humidity high'
 
-lovelace:
-  mode: yaml
 
 recorder:
   purge_keep_days: 365
@@ -152,3 +177,8 @@ notify:
     platform: telegram
     chat_id: !secret heziwm_chat_id
 
+logger:
+   default: error
+
+lovelace:
+  mode: yaml

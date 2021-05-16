@@ -15,6 +15,12 @@ views:
         entities:
           - binary_sensor.ble_opening_xiaomi_sensor_door_status
           - alert.kl43_door
+          - binary_sensor.ble_motion_qingpingmotionsensor1
+          - binary_sensor.ble_motion_qingpingmotionsensor2
+          - binary_sensor.ble_motion_qingpingmotionsensor3
+          - alert.kl43_motion
+          - sensor.average_humidity
+          - alert.kl43_humidity
       - type: entities
         title: PI Sensors
         entities:

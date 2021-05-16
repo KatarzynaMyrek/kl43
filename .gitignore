@@ -9,3 +9,5 @@ home-assistant_v2.db
 home-assistant.log
 dehydrated.log
 dehydrated
+home-assistant_v2.db-shm
+home-assistant_v2.db-wal

@@ -1,0 +1,14 @@
+  kl43_humidity:
+    name: KL43 humidity level too high
+    done_message: KL43 humidity level ok
+    entity_id: binary_sensor.average_humidity_too_high
+    state: 'on'
+    repeat: 60
+    can_acknowledge: true
+    skip_first: false
+    data:
+      inline_keyboard:
+        - 'Acknowledge:/kl43_humidity_acknowledge'
+    notifiers:
+      - olivia
+      - heziwm

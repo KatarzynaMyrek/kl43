@@ -1,4 +1,4 @@
-- alias: Acknowledge the KL43 Door alert
+- alias: Acknowledge the KL43 door alert
   trigger: 
     platform: event
     event_type: telegram_callback
@@ -9,7 +9,29 @@
     data:  
       entity_id: alert.kl43_door
 
-## Aailability
+- alias: Acknowledge the KL43 motion alert
+  trigger: 
+    platform: event
+    event_type: telegram_callback
+    event_data: 
+      data: /kl43_motion_acknowledge
+  action:
+  - service: homeassistant.turn_off
+    data:  
+      entity_id: alert.kl43_motion
+
+- alias: Acknowledge the KL43 humidity alert
+  trigger: 
+    platform: event
+    event_type: telegram_callback
+    event_data: 
+      data: /kl43_humidity_acknowledge
+  action:
+  - service: homeassistant.turn_off
+    data:  
+      entity_id: alert.kl43_humidity
+
+## Availability
 - alias: Daily report with unavailable entities
   initial_state: 'true'
   trigger:

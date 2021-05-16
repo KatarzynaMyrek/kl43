@@ -1,0 +1,14 @@
+  kl43_motion:
+    name: KL43 motion detected
+    done_message: KL43 no more motion detected
+    entity_id: group.motion_sensors
+    state: 'on'
+    repeat: 5
+    can_acknowledge: true
+    skip_first: false
+    data:
+      inline_keyboard:
+        - 'Acknowledge:/kl43_motion_acknowledge'
+    notifiers:
+      - olivia
+      - heziwm
